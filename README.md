@@ -163,25 +163,25 @@ Each script is designed to simplify the installation process and ensure a consis
    ```
 2. **Switch to a Component Branch** :
 
-```bash
+   ```bash
    git checkout <branch-name>
-```
+   ```
 
 2. **Deploy Infrastructure** :
    Navigate to your Terraform configuration and apply:
 
-```bash
+   ```bash
    terraform init
    terraform plan  #to verify the resources
    terraform apply
-```
+   ```
 
 2. **Deploy Microservices** :
    Apply Kubernetes manifests using `kubectl`:
 
-```bash
+   ```bash
    kubectl apply -f <component-name>.yml
-```
+   ```
 
 2. **Access Services** :
    Use the API Gateway to route requests to respective microservices.
