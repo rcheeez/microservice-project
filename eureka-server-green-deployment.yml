@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: eureka-server-green
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka-server
+      version: green
+  template:
+    metadata:
+      labels: 
+        app: eureka-server
+        version: green
+    spec:
+      containers:
+      - name: eureka-server
+        image: guravarchies/eureka-server:green 
+        ports: 
+        - containerPort: 8761
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "500m"
+          limits:
+            memory: "1000Mi"
+            cpu: "1000m"
