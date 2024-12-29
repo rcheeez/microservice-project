@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coupon-app-blue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: coupon-app
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: coupon-app
+        version: blue
+    spec:
+      containers:
+      - name: coupon-app
+        image: guravarchies/coupon-app:blue # Adjust the image tag for the blue version
+        ports:
+        - containerPort: 8001
+        env:
+        - name: MYSQL_URL
+          value: jdbc:mysql://mysql-coupon-service:3306/coupondb?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+        - name: MYSQL_USERNAME
+          value: root
+        - name: MYSQL_PASSWORD
+          value: Pass123$ 
+        - name: EUREKA_SERVER_URI
+          value: http://eureka-service:8761/eureka/
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "500m"
+          limits:
+            memory: "1000Mi"
+            cpu: "1000m"

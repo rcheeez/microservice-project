@@ -1,0 +1,46 @@
+---
+# MySQL Deployment with Resource Requests
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: coupon-mysql
+spec:
+  selector:
+    matchLabels:
+      app: coupon-mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: coupon-mysql
+    spec:
+      containers:
+      - image: mysql:8
+        name: coupon-mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "Pass123$"
+        - name: MYSQL_DATABASE
+          value: "coupondb"
+        ports:
+        - containerPort: 3306
+          name: coupon-mysql
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+---
+# MySQL Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-coupon-service
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: coupon-mysql

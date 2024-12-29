@@ -1,0 +1,27 @@
+server:
+  port: 8001
+  
+spring:
+  application:
+    name: coupon-service
+
+  datasource:
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+      
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_URI}
+   
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
