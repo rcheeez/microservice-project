@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api-gateway-blue
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api-gateway
+      version: blue
+  template:
+    metadata:
+      labels:
+        app: api-gateway
+        version: blue
+    spec:
+      containers:
+      - name: api-gateway
+        image: guravarchies/api-gateway:blue # Adjust the image tag for the blue version
+        ports:
+        - containerPort: 8181
+        env:
+        - name: PRODUCT_URI
+          value: http://product-service:8000
+        - name: COUPON_URI
+          value: http://coupon-service:8001
+        - name: INVENTORY_URI
+          value: http://inventory-service:8002
+        - name: EUREKA_SERVER_URI
+          value: http://eureka-service:8761/eureka/
+        resources:
+          requests:
+            memory: "500Mi"
+            cpu: "500m"
+          limits:
+            memory: "1000Mi"
+            cpu: "1000m"

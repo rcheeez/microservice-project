@@ -1,0 +1,41 @@
+server:
+  port: 8181
+ 
+logging:
+  level:
+    org: 
+      springframework:
+        security: DEBUG
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+ 
+spring:
+  application:
+    name: api-gateway
+  
+  cloud:
+    gateway:
+      routes:
+        - id: product-service
+          uri: ${PRODUCT_URI}
+          predicates:
+            - Path=/api/product/**
+        
+        - id: coupon-service
+          uri: ${COUPON_URI}
+          predicates:
+            - Path=/api/coupon/**
+
+        - id: inventory-service
+          uri: ${INVENTORY_URI}
+          predicates:
+            - Path=/api/inventory/**
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_URI}   
