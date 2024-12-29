@@ -1,0 +1,46 @@
+---
+# MySQL Deployment with Resource Requests
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: product-mysql
+spec:
+  selector:
+    matchLabels:
+      app: product-mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: product-mysql
+    spec:
+      containers:
+      - image: mysql:8
+        name: product-mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: "Pass123$"
+        - name: MYSQL_DATABASE
+          value: "productdb"
+        ports:
+        - containerPort: 3306
+          name: product-mysql
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+---
+# MySQL Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql-product-service
+spec:
+  ports:
+  - port: 3306
+  selector:
+    app: product-mysql

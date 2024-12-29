@@ -1,0 +1,33 @@
+server:
+  port: 8000
+  
+spring:
+  application:
+    name: Product-Service
+
+  datasource:
+    url: ${MYSQL_URL}
+    username: ${MYSQL_USERNAME}
+    password: ${MYSQL_PASSWORD}
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+      
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_SERVER_URI}
+
+pivotal:
+  couponservice:
+    url: ${COUPON_URI}
+   
+  inventoryservice:
+    url: ${INVENTORY_URI}
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
